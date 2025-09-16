@@ -1,0 +1,134 @@
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1>Dashboard</h1>
+    <p>Visão geral do sistema de gestão do patronato</p>
+  </div>
+
+  @if (loading) {
+    <div class="loading-container">
+      <div class="spinner"></div>
+      <p>Carregando estatísticas...</p>
+    </div>
+  } @else {
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon total">
+          <i class="fas fa-users"></i>
+        </div>
+        <div class="stat-content">
+          <h3>{{ stats.totalAssistidos }}</h3>
+          <p>Total de Assistidos</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon active">
+          <i class="fas fa-user-check"></i>
+        </div>
+        <div class="stat-content">
+          <h3>{{ stats.assistidosAtivos }}</h3>
+          <p>Assistidos Ativos</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon appointments">
+          <i class="fas fa-calendar-day"></i>
+        </div>
+        <div class="stat-content">
+          <h3>{{ stats.agendamentosHoje }}</h3>
+          <p>Agendamentos Hoje</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon visits">
+          <i class="fas fa-clipboard-list"></i>
+        </div>
+        <div class="stat-content">
+          <h3>{{ stats.visitasPendentes }}</h3>
+          <p>Visitas Pendentes</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-content">
+      <div class="content-grid">
+        <div class="content-card">
+          <div class="card-header">
+            <h3>Atividades Recentes</h3>
+            <button class="btn btn-outline-primary btn-sm">Ver Todas</button>
+          </div>
+          <div class="card-content">
+            <div class="activity-item">
+              <div class="activity-icon">
+                <i class="fas fa-user-plus"></i>
+              </div>
+              <div class="activity-text">
+                <p>Novo assistido cadastrado</p>
+                <span>Há 2 horas</span>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon">
+                <i class="fas fa-calendar-check"></i>
+              </div>
+              <div class="activity-text">
+                <p>Agendamento confirmado</p>
+                <span>Há 4 horas</span>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon">
+                <i class="fas fa-home"></i>
+              </div>
+              <div class="activity-text">
+                <p>Visita domiciliar realizada</p>
+                <span>Ontem</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="content-card">
+          <div class="card-header">
+            <h3>Próximos Agendamentos</h3>
+            <button class="btn btn-outline-primary btn-sm">Ver Calendário</button>
+          </div>
+          <div class="card-content">
+            <div class="appointment-item">
+              <div class="appointment-time">
+                <span class="time">09:00</span>
+                <span class="date">Hoje</span>
+              </div>
+              <div class="appointment-details">
+                <p>Orientação - João Silva</p>
+                <span class="status confirmed">Confirmado</span>
+              </div>
+            </div>
+            <div class="appointment-item">
+              <div class="appointment-time">
+                <span class="time">14:30</span>
+                <span class="date">Hoje</span>
+              </div>
+              <div class="appointment-details">
+                <p>Trabalho - Maria Santos</p>
+                <span class="status pending">Pendente</span>
+              </div>
+            </div>
+            <div class="appointment-item">
+              <div class="appointment-time">
+                <span class="time">10:00</span>
+                <span class="date">Amanhã</span>
+              </div>
+              <div class="appointment-details">
+                <p>Educação - Pedro Costa</p>
+                <span class="status confirmed">Confirmado</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

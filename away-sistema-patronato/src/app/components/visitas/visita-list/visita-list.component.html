@@ -1,0 +1,109 @@
+<div class="visitas-container">
+  <div class="page-header">
+    <div class="header-content">
+      <h1>Visitas</h1>
+      <p>Gerencie as visitas aos assistidos</p>
+    </div>
+    <button class="btn btn-primary btn-new">
+      <i class="fas fa-plus"></i>
+      Nova Visita
+    </button>
+  </div>
+
+  <div class="filters-section">
+    <div class="search-container">
+      <div class="search-input">
+        <i class="fas fa-search"></i>
+        <input
+          type="text"
+          [(ngModel)]="filtro.assistidoId"
+          placeholder="Buscar por ID do assistido..."
+          (keyup.enter)="pesquisar()"
+        />
+      </div>
+      <select [(ngModel)]="filtro.status" class="status-select">
+        <option value="">Todos os Status</option>
+        @for (status of statusOptions; track status) {
+          <option [value]="status">{{ getStatusText(status) }}</option>
+        }
+      </select>
+      <select [(ngModel)]="filtro.tipoVisita" class="status-select">
+        <option value="">Todos os Tipos</option>
+        @for (tipo of tipoVisitaOptions; track tipo) {
+          <option [value]="tipo">{{ getTipoVisitaText(tipo) }}</option>
+        }
+      </select>
+      <button class="btn btn-outline-primary" (click)="pesquisar()">
+        <i class="fas fa-search"></i>
+        Buscar
+      </button>
+      <button class="btn btn-outline-secondary" (click)="limparFiltros()">
+        <i class="fas fa-times"></i>
+        Limpar
+      </button>
+    </div>
+  </div>
+
+  @if (loading) {
+    <div class="loading-container">
+      <div class="spinner"></div>
+      <p>Carregando visitas...</p>
+    </div>
+  } @else {
+    <div class="visitas-list">
+      @if (visitas.length === 0) {
+        <div class="empty-state">
+          <i class="fas fa-home"></i>
+          <h3>Nenhuma visita encontrada</h3>
+          <p>Não há visitas cadastradas ou que correspondam aos filtros aplicados.</p>
+        </div>
+      } @else {
+        @for (visita of visitas; track visita.id) {
+          <div class="visita-card">
+            <div class="visita-icon">
+              <i class="fas fa-home"></i>
+            </div>
+            
+            <div class="visita-info">
+              <h3 class="visita-title">{{ getTipoVisitaText(visita.tipoVisita) }}</h3>
+              <div class="visita-details">
+                <span class="detail-item">
+                  <strong>Data:</strong> {{ visita.dataVisita | date:'dd/MM/yyyy' }}
+                </span>
+                <span class="detail-item">
+                  <strong>Horário:</strong> {{ visita.horaInicio }} - {{ visita.horaFim }}
+                </span>
+                @if (visita.assistido) {
+                  <span class="detail-item">
+                    <strong>Assistido:</strong> {{ visita.assistido.nome }}
+                  </span>
+                }
+                <span class="detail-item">
+                  <strong>Responsável:</strong> {{ visita.responsavelVisita }}
+                </span>
+              </div>
+            </div>
+
+            <div class="visita-status">
+              <span class="status-badge">
+                {{ getStatusText(visita.status) }}
+              </span>
+            </div>
+
+            <div class="visita-actions">
+              <button class="btn-action btn-view" title="Visualizar">
+                <i class="fas fa-eye"></i>
+              </button>
+              <button class="btn-action btn-edit" title="Editar">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn-action btn-delete" title="Excluir">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </div>
+        }
+      }
+    </div>
+  }
+</div>

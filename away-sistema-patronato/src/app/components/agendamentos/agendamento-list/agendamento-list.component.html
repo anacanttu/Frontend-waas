@@ -1,0 +1,106 @@
+<div class="agendamentos-container">
+  <div class="page-header">
+    <div class="header-content">
+      <h1>Agendamentos</h1>
+      <p>Gerencie os agendamentos de atividades dos assistidos</p>
+    </div>
+    <button class="btn btn-primary btn-new">
+      <i class="fas fa-plus"></i>
+      Novo Agendamento
+    </button>
+  </div>
+
+  <div class="filters-section">
+    <div class="search-container">
+      <div class="search-input">
+        <i class="fas fa-search"></i>
+        <input
+          type="text"
+          [(ngModel)]="filtro.assistidoId"
+          placeholder="Buscar por ID do assistido..."
+          (keyup.enter)="pesquisar()"
+        />
+      </div>
+      <select [(ngModel)]="filtro.status" class="status-select">
+        <option value="">Todos os Status</option>
+        @for (status of statusOptions; track status) {
+          <option [value]="status">{{ getStatusText(status) }}</option>
+        }
+      </select>
+      <select [(ngModel)]="filtro.tipoAtividade" class="status-select">
+        <option value="">Todos os Tipos</option>
+        @for (tipo of tipoAtividadeOptions; track tipo) {
+          <option [value]="tipo">{{ getTipoAtividadeText(tipo) }}</option>
+        }
+      </select>
+      <button class="btn btn-outline-primary" (click)="pesquisar()">
+        <i class="fas fa-search"></i>
+        Buscar
+      </button>
+      <button class="btn btn-outline-secondary" (click)="limparFiltros()">
+        <i class="fas fa-times"></i>
+        Limpar
+      </button>
+    </div>
+  </div>
+
+  @if (loading) {
+    <div class="loading-container">
+      <div class="spinner"></div>
+      <p>Carregando agendamentos...</p>
+    </div>
+  } @else {
+    <div class="agendamentos-list">
+      @if (agendamentos.length === 0) {
+        <div class="empty-state">
+          <i class="fas fa-calendar-alt"></i>
+          <h3>Nenhum agendamento encontrado</h3>
+          <p>Não há agendamentos cadastrados ou que correspondam aos filtros aplicados.</p>
+        </div>
+      } @else {
+        @for (agendamento of agendamentos; track agendamento.id) {
+          <div class="agendamento-card">
+            <div class="agendamento-icon">
+              <i class="fas fa-calendar-check"></i>
+            </div>
+            
+            <div class="agendamento-info">
+              <h3 class="agendamento-title">{{ getTipoAtividadeText(agendamento.tipoAtividade) }}</h3>
+              <div class="agendamento-details">
+                <span class="detail-item">
+                  <strong>Data:</strong> {{ agendamento.dataAgendamento | date:'dd/MM/yyyy' }}
+                </span>
+                <span class="detail-item">
+                  <strong>Horário:</strong> {{ agendamento.horaInicio }} - {{ agendamento.horaFim }}
+                </span>
+                @if (agendamento.assistido) {
+                  <span class="detail-item">
+                    <strong>Assistido:</strong> {{ agendamento.assistido.nome }}
+                  </span>
+                }
+              </div>
+            </div>
+
+            <div class="agendamento-status">
+              <span class="status-badge">
+                {{ getStatusText(agendamento.status) }}
+              </span>
+            </div>
+
+            <div class="agendamento-actions">
+              <button class="btn-action btn-view" title="Visualizar">
+                <i class="fas fa-eye"></i>
+              </button>
+              <button class="btn-action btn-edit" title="Editar">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn-action btn-delete" title="Excluir">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </div>
+        }
+      }
+    </div>
+  }
+</div>
